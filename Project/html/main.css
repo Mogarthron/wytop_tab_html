@@ -1,0 +1,30 @@
+table {
+  width: 75%;
+}
+
+td {
+  text-align: center;
+}
+
+thead {
+  background-color: dimgrey;
+  color: #fff;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(153, 145, 145);
+}
+
+.sticky-table-header {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+
+.red-teble-cell-text {
+  color: red;
+}
+
+.transparent-table-cell-text {
+  color: transparent;
+}
