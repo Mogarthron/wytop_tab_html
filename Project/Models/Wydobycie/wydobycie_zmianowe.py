@@ -1,11 +1,25 @@
 import pandas as pd
 import json
 
+
 from Models.Wydobycie.raport_topiarza import Tabelka_z_Wydobyciem_po_baniakach
 from Models.Wydobycie.wydobycie_brutto import Wydobycie_Brutto
+from Models import scierzki_do_plikow
 
-def Dane_Do_wytopu(od, do):
+def Wydobycie_Zmianiowe():
+    
+    df = pd.read_excel(scierzki_do_plikow["Dane_Do_Wydobycia"])
 
+    df.drop(["Unnamed: 8", "Unnamed: 9", "Unnamed: 10"], axis=1, inplace=True)
+    
+    print(df.tail(30))
+
+
+def Dane_Do_wytopu(od:str, do:str):
+    """
+    Raport Wytopu na podstawie Raportu Topiarza i Raportera produkcji od 1 listopada 2021
+    od,do : format daty RRRR.M.D
+    """
     w_brutto = Wydobycie_Brutto(od, do)
 
     sbdw = w_brutto.Szklo_bezbarwne_do_wytopu 
@@ -19,11 +33,9 @@ def Dane_Do_wytopu(od, do):
         szklo_bezb_z_produkcji.fillna(0, inplace=True)
         return szklo_bezb_z_produkcji
 
-    bezb_WG_R = Szklo_bezb_z_produkcji("R")
-    bezb_WG_P = Szklo_bezb_z_produkcji("P")
-    bezb_WG_N = Szklo_bezb_z_produkcji("N")
-    tabeleczka = pd.merge(bezb_WG_R, bezb_WG_P, how="inner", on="Data")
-    tabeleczka = pd.merge(tabeleczka, bezb_WG_N, how="inner", on="Data")
+    
+    tabeleczka = pd.merge(Szklo_bezb_z_produkcji("R"), Szklo_bezb_z_produkcji("P"), how="inner", on="Data")
+    tabeleczka = pd.merge(tabeleczka, Szklo_bezb_z_produkcji("N"), how="inner", on="Data")
     
     tabeleczka = pd.merge(tabeleczka, Tabelka_z_Wydobyciem_po_baniakach(od, do), how="inner", on="Data")
     tabeleczka = pd.merge(tabeleczka, Wylewanie(od,do), how="inner", on="Data")
@@ -69,11 +81,12 @@ def Dane_Do_wytopu(od, do):
     tabeleczka["Wydobycie_WG"] = tabeleczka["WG_1"] + tabeleczka["WG_2"] + tabeleczka["WG_3"]
     
     kolumny = ["Data", "WG_1", "WG_2", "WG_3", "Wydobycie_WG", "WE_1", "WE_2", "WE_3", "Wydobycie_WE"]
-    print(tabeleczka[kolumny])
+    return tabeleczka[kolumny]
+
 
 def Wylewanie(od,do):
 
-    with open("E:\Biaglass\Wytop\Wydobycie zmianowe\wytop_tab_html\Project\Data\wylewanie.json") as w:
+    with open(scierzki_do_plikow["Wylewanie"]) as w:
         dane_Wylewanie = json.load(w)["Zmiany"]        
 
     wylewanie = pd.DataFrame(dane_Wylewanie)

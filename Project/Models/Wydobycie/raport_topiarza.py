@@ -12,13 +12,13 @@ from .wydobycie_brutto import Wydobycie_Brutto
 
 
 class Raport_Topiarza:
-    lokalizacja_pliku="E:/Biaglass/Wytop/Raport_Topiarza/2021.xlsx"
+    
     bazowa_gestosc_szkla_opalowego = 2.33 #g/cm3
     bazowa_powierzchnia_wyrobowki_WE = 5000 #cm3
 
     def __init__(self):
-        
-        self.__rap_top = read_excel(self.lokalizacja_pliku)          
+        from Models import scierzki_do_plikow
+        self.__rap_top = read_excel(scierzki_do_plikow["Raport_Topiarza"]["2021"])          
 
         self.__rap_top["Baniak_WG"] = self.__rap_top["Baniak_WG"].astype(float64)
         self.__rap_top["Czas Wpisu"] = self.__rap_top.apply(lambda x: Czas_wpisu(x["Data"], x["Godzina"]), axis=1)
@@ -203,6 +203,7 @@ def Tabelka_z_Wydobyciem_po_baniakach(od:str, do:str):
     wydobycie = [Wydobycie_Zmianowe(rt, d).Wiersz_Do_Raportu for d in zakres_dat]                
 
     df = DataFrame(wydobycie)
+    # df = DataFrame([Wydobycie_Zmianowe(rt, d).Wiersz_Do_Raportu for d in [od + timedelta(days=x) for x in range(0, (do-od).days+1)]])
     df["Data"] = to_datetime(df["Data"])
     
     return df

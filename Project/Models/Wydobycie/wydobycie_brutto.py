@@ -5,10 +5,11 @@ import fdb
 from datetime import datetime
 
 from pandas.core.tools.datetimes import to_datetime
+from Models import scierzki_do_plikow
 
 
-path = "E:\Biaglass\Wytop\Wydobycie zmianowe\wytop_tab_html\Project\Data\ConnectionFDB.txt"
-with open(path, "r") as c:
+
+with open(scierzki_do_plikow["Polaczenie_z_baza"], "r") as c:
     con = c.read()
 
 con = con.split(",")

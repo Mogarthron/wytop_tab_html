@@ -7,8 +7,8 @@ class Zestaw:
 
     def __init__(self, sklad_surowcowy=None, sklad_tlenkowy=None,  **stluczka):
               
-
-        with open("E:/Biaglass/Wytop/Wydobycie zmianowe/wytop_tab_html/Project/Data/Surowce.json", "r") as f:
+        from Models import scierzki_do_plikow
+        with open(scierzki_do_plikow["Surowce"], "r") as f:
             dane = json.load(f)
         
         self.__sposob_inicjalizacji = None
