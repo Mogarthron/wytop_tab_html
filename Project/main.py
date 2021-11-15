@@ -11,7 +11,8 @@ def main():
 
 
     # Wydobycie_Zmianiowe()
-    print(Dane_Do_wytopu("2021.11.1", "2021.11.9").to_string(index=False))
+    print(Dane_Do_wytopu("2021.11.1", "2021.11.13").to_string(index=False))
+    # print(Wylewanie("2021.11.1", "2021.11.14").to_string(index=False))
     # print(Wydobycie_Brutto("2021.11.9", "2021.11.10").Wydobycie_Brutto.to_string(index=False))
     # print(Tabelka_z_Wydobyciem_po_baniakach("2021.11.9", "2021.11.9"))
   

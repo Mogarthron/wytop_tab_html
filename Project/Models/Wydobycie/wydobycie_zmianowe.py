@@ -41,10 +41,16 @@ def Dane_Do_wytopu(od:str, do:str):
     tabeleczka = pd.merge(tabeleczka, Wylewanie(od,do), how="inner", on="Data")
 
     def Wydobycie_WE(n):
-        if type(n["Wylewanie"]) == list:
+        if type(n["Wylewanie"]) == list and len(n["Wylewanie"]) == 6:
             w_we = 0 if n["Wylewanie"][3] == True else n["WE_1"]
             w_we += 0 if n["Wylewanie"][4] == True else n["WE_2"]
             w_we += 0 if n["Wylewanie"][5] == True else n["WE_3"]
+
+            return w_we
+        if type(n["Wylewanie"]) == list and len(n["Wylewanie"]) == 2:
+            w_we = 0 if n["Wylewanie"][1] == True else n["WE_1"]
+            w_we += 0 if n["Wylewanie"][1] == True else n["WE_2"]
+            w_we += 0 if n["Wylewanie"][1] == True else n["WE_3"]
 
             return w_we
         else:
@@ -59,7 +65,7 @@ def Dane_Do_wytopu(od:str, do:str):
 
         war = zmiany[Zmiana]
 
-        if type(n["Wylewanie"]) == list:
+        if type(n["Wylewanie"]) == list and len(n["Wylewanie"]) == 6:
                 
             if n["Wylewanie"][war[2]] == True:
                 return 0
@@ -67,6 +73,15 @@ def Dane_Do_wytopu(od:str, do:str):
                 return n[war[0]]
             else:
                 return n[war[0]] + n[war[1]] * 3 
+        
+        elif type(n["Wylewanie"]) == list and len(n["Wylewanie"]) == 2:
+                
+            if n["Wylewanie"][0] == True:
+                return 0
+            # elif n["Wylewanie"][war[2]+1] == True:
+            #     return n[war[0]]
+            else:
+                return n[war[0]] + n[war[1]] * 3
 
         elif n["Wylewanie"]:
             return 0
