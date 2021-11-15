@@ -25,17 +25,19 @@ def Dane_Do_wytopu(od:str, do:str):
     sbdw = w_brutto.Szklo_bezbarwne_do_wytopu 
 
     def Szklo_bezb_z_produkcji(Zmiana, Mnoznik_Korygujacy_Produkcje=1.2):
+        _Zmiana = f"WG_{Zmiana}"
         szklo_bezb_z_produkcji = pd.DataFrame({"Data": pd.date_range(od,do)})
         szklo_bezb_z_produkcji = pd.merge(szklo_bezb_z_produkcji, sbdw.loc[sbdw["Zmiana"] == Zmiana][["Dzm", "Szklo WG"]], how="left", left_on="Data", right_on="Dzm")
         szklo_bezb_z_produkcji.drop("Dzm", axis=1, inplace=True)
         szklo_bezb_z_produkcji["Szklo WG"] = szklo_bezb_z_produkcji["Szklo WG"] * Mnoznik_Korygujacy_Produkcje
-        szklo_bezb_z_produkcji.columns = ["Data", f"WG_{Zmiana}"]
+        szklo_bezb_z_produkcji.columns = ["Data",_Zmiana] #f"WG_{Zmiana}"]
         szklo_bezb_z_produkcji.fillna(0, inplace=True)
-        return szklo_bezb_z_produkcji
+        return szklo_bezb_z_produkcji.groupby(["Data"]).sum()
 
     
     tabeleczka = pd.merge(Szklo_bezb_z_produkcji("R"), Szklo_bezb_z_produkcji("P"), how="inner", on="Data")
     tabeleczka = pd.merge(tabeleczka, Szklo_bezb_z_produkcji("N"), how="inner", on="Data")
+   
     
     tabeleczka = pd.merge(tabeleczka, Tabelka_z_Wydobyciem_po_baniakach(od, do), how="inner", on="Data")
     tabeleczka = pd.merge(tabeleczka, Wylewanie(od,do), how="inner", on="Data")
@@ -76,7 +78,7 @@ def Dane_Do_wytopu(od:str, do:str):
         
         elif type(n["Wylewanie"]) == list and len(n["Wylewanie"]) == 2:
                 
-            if n["Wylewanie"][0] == True:
+            if n["Wylewanie"][0] == False:
                 return 0
             # elif n["Wylewanie"][war[2]+1] == True:
             #     return n[war[0]]
@@ -96,7 +98,8 @@ def Dane_Do_wytopu(od:str, do:str):
     tabeleczka["Wydobycie_WG"] = tabeleczka["WG_1"] + tabeleczka["WG_2"] + tabeleczka["WG_3"]
     
     kolumny = ["Data", "WG_1", "WG_2", "WG_3", "Wydobycie_WG", "WE_1", "WE_2", "WE_3", "Wydobycie_WE"]
-    return tabeleczka[kolumny]
+    # return tabeleczka[kolumny]
+    return tabeleczka
 
 
 def Wylewanie(od,do):
