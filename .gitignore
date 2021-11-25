@@ -139,3 +139,5 @@ cython_debug/
 
 # Directoris
 Data
+
+Project/main.py

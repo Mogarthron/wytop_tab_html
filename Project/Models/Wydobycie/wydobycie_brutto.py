@@ -116,6 +116,7 @@ class Wydobycie_Brutto:
         self.Wydobycie_Brutto_Podsumowanie = DataFrame(nowe_kolumny)    
 
         self.Wydobycie_Brutto_Podsumowanie.reset_index(inplace=True)
+        self.Wydobycie_Brutto_Podsumowanie["Wydobycie_Brutto_Calkowite"] = self.Wydobycie_Brutto_Podsumowanie["N"] + self.Wydobycie_Brutto_Podsumowanie["P"] + self.Wydobycie_Brutto_Podsumowanie["R"]
 
         self.Szklo_bezbarwne_do_wytopu = self.Wydobycie_Brutto.loc[self.Wydobycie_Brutto["Kategoria"] == "Bezbarwne"][["Dzm", "Zmiana", "Szklo WG"]]
 
