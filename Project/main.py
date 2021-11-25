@@ -1,7 +1,9 @@
 from businnes_logic import *
-from Models.Wydobycie.wydobycie_zmianowe import Dane_Do_wytopu, Wylewanie, Wydobycie_Zmianiowe
+
+from Models.Wydobycie.wydobycie_zmianowe import Dane_Do_wytopu, Wylewanie, Wydobycie_Zmianiowe, Raport_Wydobycia_Zmianowego, Drukuj_Raport_Do_Excella
 from Models.Wydobycie.wydobycie_brutto import Wydobycie_Brutto
 from Models.Wydobycie.raport_topiarza import Tabelka_z_Wydobyciem_po_baniakach
+
 
 
 def main():    
@@ -9,17 +11,14 @@ def main():
     # bl = BusinessLogic()
     # bl.PoliczWydobycieNaDzien()
 
-
-    # Wydobycie_Zmianiowe()
-    print(Dane_Do_wytopu("2021.11.1", "2021.11.13").to_string(index=False))
+    # Drukuj_Raport_Do_Excella().Drukuj_Sformatowny_Raport_Wytopu()
+    print(Dane_Do_wytopu("2021.11.1", "2021.11.24")[["Data", "Wydobycie_WG", "WE_1", "WE_2", "WE_3", "Wydobycie_WE", "Wydobycie_Calkowite", "Wydobycie_Brutto_Calkowite"]])
+    # print(Tabelka_z_Wydobyciem_po_baniakach("2021.11.15", "2021.11.23"))
+    # print(Wydobycie_Brutto("2021.11.23", "2021.11.23").Wydobycie_Brutto)
+    # rwz = Raport_Wydobycia_Zmianowego()
+    # print(rwz.rap_2017.info())
+    # print(rwz.rap_2018_2021.info())
     # print(Wylewanie("2021.11.1", "2021.11.14").to_string(index=False))
-    # print(Wydobycie_Brutto("2021.11.9", "2021.11.10").Wydobycie_Brutto.to_string(index=False))
-    # print(Tabelka_z_Wydobyciem_po_baniakach("2021.11.9", "2021.11.9"))
-  
-
-
-    
-
 
 
 if __name__ == "__main__":
