@@ -141,7 +141,7 @@ class Wydobycie_Zmianowe:
 
     def __str__(self) -> str:
         
-        return f"{datetime.strftime(self.Data_Raportu, '%Y.%m.%d')}, wydobycie WE, Wydobycie WG"
+        return f"{datetime.strftime(self.Data_Raportu, '%Y.%m.%d')}, wydobycie WE: {self.Wydobycie_WE}, Wydobycie WG: {self.Baniaki_WG*471}"
 
     
 def Czas_wpisu(d,g):

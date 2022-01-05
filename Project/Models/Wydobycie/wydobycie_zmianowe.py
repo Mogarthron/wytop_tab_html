@@ -150,11 +150,14 @@ class Drukuj_Raport_Do_Excella:
     def Drukuj_Surowa_Tabelke(self):
         self.__tabeleczka.to_excel("Data\Wytop_listopad_2021.xlsx", index=False)
 
-    def Drukuj_Sformatowny_Raport_Wytopu(self):
+    def Drukuj_Sformatowny_Raport_Wytopu(self, nazwa_pliku:str):
+        """
+        nazwa_pliku: nazwa pliku ale też ścieżka dostępu
+        """
         from openpyxl import Workbook
         from openpyxl.styles import Font, Color, Alignment, PatternFill, Border, Side
         
-        ft = Font(color="00FF0000")
+        czerwony_kolor_czcionki_przy_wylewaniu = Font(color="00FF0000")
         _wypelnienie_wiersza = Color(rgb="0099CCFF")
 
         wb = Workbook()
@@ -192,10 +195,10 @@ class Drukuj_Raport_Do_Excella:
                 
         # wiersz podsumowania        
         ws["B1"] = f"Suma WG: {self.__tabeleczka['Wydobycie_WG'].sum():.0f}kg"
-        ws["B1"].alignment = Alignment(wrap_text=True, vertical="Center")
+        ws["B1"].alignment = Alignment(wrap_text=True, vertical="center")
         ws["C1"] = "WE"        
         ws["F1"] = f"Suma WE: {self.__tabeleczka['Wydobycie_WE'].sum():.0f}kg"
-        ws["F1"].alignment = Alignment(wrap_text=True)
+        ws["F1"].alignment = Alignment(wrap_text=True, vertical="center")
         # wiersz zmian
         ws["A2"] = "zmiana"        
         ws["C2"] = "R"
@@ -217,27 +220,27 @@ class Drukuj_Raport_Do_Excella:
         for i in range(self.__tabeleczka.shape[0]):
             if type(self.__tabeleczka["Wylewanie"][i]) == list and len(self.__tabeleczka["Wylewanie"][i]) == 2: 
                 if self.__tabeleczka["Wylewanie"][i][1] == True:
-                    ws[f"C{i+3}"].font = ft
-                    ws[f"D{i+3}"].font = ft
-                    ws[f"E{i+3}"].font = ft 
+                    ws[f"C{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
+                    ws[f"D{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
+                    ws[f"E{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu 
 
             if type(self.__tabeleczka["Wylewanie"][i]) == list and len(self.__tabeleczka["Wylewanie"][i]) == 6: 
                 
                 if self.__tabeleczka["Wylewanie"][i][3] == True and self.__tabeleczka["Wylewanie"][i][4] == True:
-                    ws[f"C{i+3}"].font = ft
-                    ws[f"D{i+3}"].font = ft
+                    ws[f"C{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
+                    ws[f"D{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
                 elif self.__tabeleczka["Wylewanie"][i][3] == True and self.__tabeleczka["Wylewanie"][i][5] == True:
-                    ws[f"C{i+3}"].font = ft
-                    ws[f"E{i+3}"].font = ft
+                    ws[f"C{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
+                    ws[f"E{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
                 elif self.__tabeleczka["Wylewanie"][i][4] == True and self.__tabeleczka["Wylewanie"][i][5] == True:
-                    ws[f"E{i+3}"].font = ft
-                    ws[f"D{i+3}"].font = ft
+                    ws[f"E{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
+                    ws[f"D{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
                 
                 if self.__tabeleczka["Wylewanie"][i][3] == True:
-                    ws[f"C{i+3}"].font = ft
+                    ws[f"C{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
                 if self.__tabeleczka["Wylewanie"][i][4] == True:
-                    ws[f"D{i+3}"].font = ft
+                    ws[f"D{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
                 if self.__tabeleczka["Wylewanie"][i][5] == True:
-                    ws[f"E{i+3}"].font = ft
+                    ws[f"E{i+3}"].font = czerwony_kolor_czcionki_przy_wylewaniu
 
-        wb.save("sample.xlsx")
+        wb.save(f"{nazwa_pliku}.xlsx")
