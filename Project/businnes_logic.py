@@ -63,6 +63,11 @@ class BusinessLogic:
         return [baniak, dodacNastepnyBaniak]
 
     def PoliczWydobycieNaDzien(self):
+        """
+        Funkcja obliczająca wydobycie po wprowadzonych czasach postawinia baniaka z zestawem
+
+        
+        """
         DataRaportu = input("Data raportu (yyyy.mm.dd): ")
 
         self.DataZmiany = DataRaportu

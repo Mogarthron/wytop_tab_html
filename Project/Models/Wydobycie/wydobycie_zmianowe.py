@@ -55,7 +55,7 @@ def Dane_Do_wytopu(od:str, do:str):
                             how="inner", on="Data")
 
 
-    tabeleczka = pd.merge(szklo_bezb_do_wytopu, Tabelka_z_Wydobyciem_po_baniakach(od, do), how="inner", on="Data")
+    tabeleczka = pd.merge(szklo_bezb_do_wytopu, Tabelka_z_Wydobyciem_po_baniakach(od, do, "2022"), how="inner", on="Data")
 
     tabeleczka = pd.merge(tabeleczka, Wylewanie(od,do), how="inner", on="Data")
 

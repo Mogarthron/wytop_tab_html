@@ -80,7 +80,7 @@ class Wydobycie_z_baniaka:
         self.CzasZasypuNaZmianie = [self.CzasZasypuZestawu, self.czasZasypuNaZmianie[0]/60,self.czasZasypuNaZmianie[1]/60,self.czasZasypuNaZmianie[2]/60]
 
     def __str__(self):
-        return f"Czas zasypu: {self.CzasZasypuZestawu}, Wydobycie na zmianach: {self.WydobycieNaZmiane}"
+        return f"Czas postawienie: {self.CzasPostawienia}, Czas zasypu: {self.CzasZasypuZestawu:.2f}, Wydobycie na zmianach: {self.WydobycieNaZmiane}"
 
 
                          
